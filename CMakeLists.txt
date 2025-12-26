@@ -33,12 +33,12 @@ file(GLOB_RECURSE Engine_SOURCES
 file(GLOB_RECURSE Engine_HEADERS 
     "${Engine_DIR}/**/*.h" "${Engine_DIR}/*.h" # c
     "${Engine_DIR}/**/*.hpp" "${Engine_DIR}/*.hpp" # cpp
-    "${Engine_DIR}/**/*.inl" "${Engine_DIR}/*.inl" # cpp
+    "${Engine_DIR}/**/*.inl" "${Engine_DIR}/*.inl" # c/cpp
 )
 file(GLOB_RECURSE Engine_PRV_HEADERS
     "${Engine_DIR}/**/*.prv.h" "${Engine_DIR}/*.prv.h" # c
     "${Engine_DIR}/**/*.prv.hpp" "${Engine_DIR}/*.prv.hpp" # cpp
-    "${Engine_DIR}/**/*.prv.inl" "${Engine_DIR}/*.prv.inl" # cpp
+    "${Engine_DIR}/**/*.prv.inl" "${Engine_DIR}/*.prv.inl" # c/cpp
 )
 
 if(${BUILD_ENGINE})
@@ -46,8 +46,10 @@ if(${BUILD_ENGINE})
     set_target_properties(Engine PROPERTIES
         OUTPUT_NAME ${Engine_OUTPUT_NAME}
     )
-    target_include_directories(Engine PRIVATE ${Engine_DIR})
-    target_compile_definitions(Engine PRIVATE)
+    target_include_directories(Engine PRIVATE ${Engine_DIR} 
+        "${Engine_DIR}/Math" "${Engine_DIR}/Memory" "${Engine_DIR}/Platform"
+    )
+    target_compile_definitions(Engine PRIVATE ENGINE_EXPORT)
 
     if(${INSTALL_ENGINE})
         install(
@@ -62,7 +64,7 @@ endif()
 if(${INSTALL_ENGINE})
     set(Engine_PUB_HEADERS ${Engine_HEADERS})
     list(REMOVE_ITEM Engine_PUB_HEADERS ${Engine_PRV_HEADERS})
-    foreach(header IN LISTS ${Engine_PUB_HEADERS})
+    foreach(header IN LISTS Engine_PUB_HEADERS)
         install(
             FILES ${header}
             DESTINATION Include

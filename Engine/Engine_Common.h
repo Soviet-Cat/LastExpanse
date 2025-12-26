@@ -2,6 +2,6 @@
 /* Copyright (c) 2025 Soviet-Cat */
 /* See LICENSE.md for license details. */
 
-int main(int argc, char* argv[]) {
-    return 0;
-}
+#include "Engine_Macros.h"
+#include "Engine_Primitives.h"
+#include "Engine_Result.h"

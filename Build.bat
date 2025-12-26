@@ -1,3 +1,7 @@
+rem This file is apart of LastExpanse.
+rem Copyright (c) 2025 Soviet-Cat
+rem     See LICENSE.md for license details.
+
 @echo off
 
 cls
